@@ -21,13 +21,27 @@ public class CSVReader_Writer {
         BufferedReader reader = null;
         List <String> names = null;
 
+        try{
+
 
         	reader = Files.newBufferedReader(Paths.get("firstname_males.txt"));
             names = reader.lines()
                     .flatMap(line -> Stream.of(line.split(",")))
                     .collect(Collectors.toList());
 
-         	return names;
+
+        } catch(IOException e){
+            System.out.println(e.getMessage());
+        } finally{
+            try {
+                if(reader != null) {
+                    reader.close();
+                }
+            }catch(IOException e){
+                System.out.println("Reader could not be closed");
+            }
+        }
+        return names;
         }
 
 
@@ -40,10 +54,13 @@ public class CSVReader_Writer {
 
         List<String> names=null;
 
-            BufferedReader reader = Files.newBufferedReader(Paths.get("firstname_female.txt"))
-                names = reader.lines()
-                        .flatMap(line -> Stream.of(line.split(",")))
-                        .collect(Collectors.toList());
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get("firstname_female.txt"))) {
+            names = reader.lines()
+                    .flatMap(line -> Stream.of(line.split(",")))
+                    .collect(Collectors.toList());
+        } catch(IOException e){
+            System.out.println(e.getMessage());
+        }
 
         return names;
     }

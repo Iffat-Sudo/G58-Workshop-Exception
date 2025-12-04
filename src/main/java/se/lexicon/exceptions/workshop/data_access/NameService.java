@@ -5,6 +5,7 @@ import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exceptions.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
 public class NameService {
@@ -62,6 +63,9 @@ public class NameService {
 	     * @param name
 	     */
 	    public void addFemaleFirstName(String name){
+            if(femaleFirstNames.contains(name)){
+                throw new DuplicateNameException("The name " + name+ "already exists");
+            }
 	    	femaleFirstNames.add(name);
 	    	CSVReader_Writer.saveFemaleNames(femaleFirstNames);
 	    		
@@ -74,6 +78,9 @@ public class NameService {
 	     * @param name
 	     */
 	    public void addMaleFirstName(String name){
+            if(maleFirstNames.contains(name)){
+                throw new DuplicateNameException("The name " + name+ "already exists");
+            }
 	    	maleFirstNames.add(name);
 	        CSVReader_Writer.saveMaleNames(maleFirstNames);
 	    }
@@ -85,6 +92,9 @@ public class NameService {
 	     * @param lastName
 	     */
 	    public void addLastName(String lastName){
+            if(lastNames.contains(lastName)){
+                throw new DuplicateNameException("The name " + lastName+ "already exists");
+            }
 	    	lastNames.add(lastName);
 	        CSVReader_Writer.saveLastNames(lastNames);
 	    }
